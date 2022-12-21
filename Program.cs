@@ -6,26 +6,112 @@ namespace arch
     {
         static void Main(string[] args)
         {
-            Console.WriteLine("Podaj zawartość rejestru AX: ");
-            string AX = Console.ReadLine();
-            Console.WriteLine("Podaj zawartość rejestru BX: ");
-            string BX = Console.ReadLine();
-            Console.WriteLine("Podaj zawartość rejestru CX: ");
-            string CX = Console.ReadLine();
-            Console.WriteLine("Podaj zawartość rejestru DX: ");
-            string DX = Console.ReadLine();
+            Console.ForegroundColor = ConsoleColor.Blue;
+            Console.WriteLine("  ::::::::::: ::::    ::: ::::::::::: :::::::::: :::                     ::::::::   :::::::   ::::::::   ::::::::  ");
+            Console.WriteLine("      :+:     :+:+:   :+:     :+:     :+:        :+:                    :+:    :+: :+:   :+: :+:    :+: :+:    :+: ");
+            Console.WriteLine("      +:+     :+:+:+  +:+     +:+     +:+        +:+                    +:+    +:+ +:+  :+:+ +:+    +:+ +:+        ");
+            Console.WriteLine("      +#+     +#+ +:+ +#+     +#+     +#++:++#   +#+                     +#++:++#  +#+ + +:+  +#++:++#  +#++:++#+  ");
+            Console.WriteLine("      +#+     +#+  +#+#+#     +#+     +#+        +#+                    +#+    +#+ +#+#  +#+ +#+    +#+ +#+    +#+ ");
+            Console.WriteLine("      #+#     #+#   #+#+#     #+#     #+#        #+#                    #+#    #+# #+#   #+# #+#    #+# #+#    #+# ");
+            Console.WriteLine("  ########### ###    ####     ###     ########## ##########              ########   #######   ########   ########  ");
+            Console.ForegroundColor = ConsoleColor.Magenta;
             Console.WriteLine();
-            Console.WriteLine("1.MOV \n2.XCHNG");
+            Console.WriteLine("----------------------------------------------Uzupełnij stan rejestrów---------------------------------------------");
+            Console.WriteLine(); 
+            Console.ForegroundColor = ConsoleColor.White;
+
+
+            Console.Write("AX: ");
+
+            int countError = 0;
+            int minusError = 0;
+            int AX = int.Parse(Console.ReadLine()); 
+            if(AX > 65536 )
+            {
+                AX= 65536;
+                countError++;
+            }
+            if(AX<0)
+            {
+                AX = 0;
+                minusError++;
+            }
+
+
+            Console.Write("BX: ");
+            int BX = int.Parse(Console.ReadLine());
+            if (BX > 65536)
+            {
+                BX = 65536;
+                countError++;
+            }
+            if (BX < 0)
+            {
+                BX = 0;
+                minusError++;
+            }
+
+            Console.Write("CX: ");
+            int CX = int.Parse(Console.ReadLine());
+            if (CX > 65536)
+            {
+                CX = 65536;
+                countError++;
+            }
+            if (CX < 0)
+            {
+                CX = 0;
+                minusError++;
+            }
+
+
+            Console.Write("DX: ");
+            int DX = int.Parse(Console.ReadLine());
+            if (DX > 65536)
+            {
+                DX = 65536;
+                countError++;
+            }
+            if (DX < 0)
+            {
+                DX = 0;
+                minusError++;
+            }
+
+            Console.Clear();
+            Console.ForegroundColor = ConsoleColor.Magenta;
+            Console.WriteLine("----------------------- STAN REJESTÓW -----------------------");
+            Console.ForegroundColor = ConsoleColor.White;
+            Console.WriteLine($" AX: {AX}\n BX: {BX}\n CX: {CX}\n DX: {DX}\n");
+            if(countError > 0 || minusError>0)
+            {
+                Console.WriteLine("UWAGA");
+            }
+            if(countError > 0)
+            {
+                Console.WriteLine("Conajmniej jeden z podanych rejestrów został zmieniony \nPowód: liczba większa od 16 bit");
+            }
+            if (minusError > 0)
+            {
+                Console.WriteLine("Conajmniej jeden z podanych rejestrów został zmieniony \nPowód: liczba mniejsza od 0");
+            }
+        start:
+            Console.ForegroundColor = ConsoleColor.Magenta;
+            Console.WriteLine("--------------------- WYBIERZ OPERACJĘ ----------------------");
+            Console.WriteLine("                    [wpisz MOV lub XCHG]                     ");
+            Console.ForegroundColor = ConsoleColor.White;
+           
+
             string co = Console.ReadLine();
             Console.WriteLine();
-
-            if (co == "MOV")
+            
+            if (co == "MOV" || co=="mov")
             {
                 while (true)
                 {
-                    Console.WriteLine("Podaj pierwszy rejestr rozkazu MOV: ");
+                    Console.WriteLine("Podaj pierwszy rejestr rozkazu MOV [AX/BX/CX/DX]: ");
                     string pierwszy = Console.ReadLine();
-                    Console.WriteLine("Podaj drugi rejestr rozkazu MOV: ");
+                    Console.WriteLine("Podaj drugi rejestr rozkazu MOV [AX/BX/CX/DX]: ");
                     string drugi = Console.ReadLine();
                     Console.WriteLine();
 
@@ -97,26 +183,26 @@ namespace arch
                     {
                         Console.WriteLine("Błędnie podano rejestry procesora");
                     }
+                    Console.Clear();
+                    Console.ForegroundColor = ConsoleColor.Magenta;
+                    Console.WriteLine("---------- STAN REJESTRÓW PO WYKONANIU ROZKAZU MOV ----------");
 
-                    Console.WriteLine("Aktualny stan rejestrów procesora po wykonaniu rozkazu MOV: ");
-                    Console.WriteLine($"AX: {AX}");
-                    Console.WriteLine($"BX: {BX}");
-                    Console.WriteLine($"CX: {CX}");
-                    Console.WriteLine($"DX: {DX}");
-                    Console.WriteLine();
+                    Console.ForegroundColor = ConsoleColor.White;
+                    Console.WriteLine($" AX: {AX}\n BX: {BX}\n CX: {CX}\n DX: {DX}\n");
+                    goto start;
                 }
             }
-            else if (co == "XCHNG")
+            else if (co == "XCHG")
             {
                 while (true)
                 {
-                    string AXC = AX;
-                    string BXC = BX;
-                    string CXC = CX;
-                    string DXC = DX;
-                    Console.WriteLine("Podaj pierwszy rejestr rozkazu XCHNG: ");
+                    int AXC = AX;
+                    int BXC = BX;
+                    int CXC = CX;
+                    int DXC = DX;
+                    Console.WriteLine("Podaj pierwszy rejestr rozkazu XCHNG [AX/BX/CX/DX]: ");
                     string pierwszy = Console.ReadLine();
-                    Console.WriteLine("Podaj drugi rejestr rozkazu XCHNG: ");
+                    Console.WriteLine("Podaj drugi rejestr rozkazu XCHNG [AX/BX/CX/DX]: ");
 
                     string drugi = Console.ReadLine();
                     Console.WriteLine();
@@ -206,12 +292,24 @@ namespace arch
                     {
                         Console.WriteLine("Błędnie podano rejestry procesora");
                     }
-                    Console.WriteLine("Aktualny stan rejestrów procesora po wykonaniu rozkazu MOV: ");
-                    Console.WriteLine($"AX: {AX}");
-                    Console.WriteLine($"BX: {BX}");
-                    Console.WriteLine($"CX: {CX}");
-                    Console.WriteLine($"DX: {DX}");
+                    Console.Clear();
+                    Console.ForegroundColor = ConsoleColor.Magenta;
+                    Console.WriteLine("Aktualny stan rejestrów procesora po wykonaniu rozkazu XCHG: ");
+                    Console.ForegroundColor = ConsoleColor.White;
+
+                    Console.WriteLine($" AX: {AX}\n BX: {BX}\n CX: {CX}\n DX: {DX}\n"); goto start;
                 }
+            }
+            else
+            {
+                Console.Clear();
+                Console.ForegroundColor = ConsoleColor.Magenta;
+                Console.WriteLine("----------------------- STAN REJESTÓW -----------------------");
+                Console.ForegroundColor = ConsoleColor.White;
+                Console.WriteLine($" AX: {AX}\n BX: {BX}\n CX: {CX}\n DX: {DX}\n");
+
+                Console.WriteLine("Nieoczekiwana wartość, sprawdź poprawnosć pisowni !");
+                goto start;
             }
         }
     }
